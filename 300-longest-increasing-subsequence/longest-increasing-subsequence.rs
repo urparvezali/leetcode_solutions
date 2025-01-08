@@ -12,6 +12,6 @@ impl Solution {
             }
             dp[i] += mx;
         }
-        *dp.iter().max().unwrap()
+        *dp.iter().max().unwrap_or(&1)
     }
 }
