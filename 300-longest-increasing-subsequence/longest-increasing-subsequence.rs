@@ -1,17 +1,14 @@
+use std::collections::BTreeSet;
+
 impl Solution {
     pub fn length_of_lis(nums: Vec<i32>) -> i32 {
-        let n = nums.len();
-        let mut dp = vec![1; n];
-        let mut mx = 0;
-        for i in (0..n).rev() {
-            mx = 0;
-            for j in i + 1..n {
-                if nums[i] < nums[j] {
-                    mx = mx.max(dp[j]);
-                }
+        let mut set = BTreeSet::new();
+        for &num in &nums {
+            if let Some(&x) = set.range(num..).next() {
+                set.remove(&x);
             }
-            dp[i] += mx;
+            set.insert(num);
         }
-        *dp.iter().max().unwrap_or(&1)
+        set.len() as i32
     }
 }
